@@ -15,48 +15,48 @@ namespace VendingMachine
         private int stockOf100Yen = 10;     // 100円玉の在庫
         private int charge = 0;             // お釣り
 
-        public Drink Buy(int money, int kindOfDrink)
+        public Drink Buy(int payment, int kindOfDrink)
         {
-            if ((money != 100) && (money != 500))
+            if ((payment != 100) && (payment != 500))
             {
-                charge += money;
+                charge += payment;
                 return null;
             }
 
             if ((kindOfDrink == Drink.COKE) && (stockOfCoke == 0))
             {
-                charge += money;
+                charge += payment;
                 return null;
             }
             else if ((kindOfDrink == Drink.DIET_COKE) && (stockOfDietCoke == 0))
             {
-                charge += money;
+                charge += payment;
                 return null;
             }
             else if ((kindOfDrink == Drink.TEA) && (stockOfTea == 0))
             {
-                charge += money;
+                charge += payment;
                 return null;
             }
 
             // 釣り銭不足
-            if (money == 500 && stockOf100Yen < 4)
+            if (payment == 500 && stockOf100Yen < 4)
             {
-                charge += money;
+                charge += payment;
                 return null;
             }
 
-            if (money == 100)
+            if (payment == 100)
             {
                 // 100円玉を釣り銭に使える
                 stockOf100Yen++;
             }
-            else if (money == 500)
+            else if (payment == 500)
             {
                 // 400円のお釣り
-                charge += (money - 100);
+                charge += (payment - 100);
                 // 100円玉を釣り銭に使える
-                stockOf100Yen -= (money - 100) / 100;
+                stockOf100Yen -= (payment - 100) / 100;
             }
 
             if (kindOfDrink == Drink.COKE)
