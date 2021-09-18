@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace VendingMachine
 {
@@ -8,13 +9,13 @@ namespace VendingMachine
         {
             var vendincMachine = new VendingMachine();
 
-            var drink = vendincMachine.Buy(500, Drink.COKE);
+            var drink = vendincMachine.Buy(new FiveHundredYen(), DrinkType.COKE);
             var charge = vendincMachine.Refund();
 
-            if (drink != null && drink.Kind == Drink.COKE)
+            if (drink != null && drink.Kind == DrinkType.COKE)
             {
                 Console.WriteLine("buy coke");
-                Console.WriteLine($"charge is {charge} yen");
+                Console.WriteLine($"charge is {charge.Sum(coin => coin.Amount)} yen");
             }
             else
             {

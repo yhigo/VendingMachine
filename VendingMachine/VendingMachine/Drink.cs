@@ -12,15 +12,15 @@ namespace VendingMachine
         public static readonly int DIET_COKE = 1;
         public static readonly int TEA = 2;
 
-        private int _kind;
+        private DrinkType _kind;
 
-        public int Kind
+        public DrinkType Kind
         {
             get { return _kind; }
         }
 
 
-        public Drink(int kind)
+        public Drink(DrinkType kind)
         {
             this._kind = kind;
         }
