@@ -15,7 +15,7 @@ namespace VendingMachine
             if (drink != null && drink.Kind == DrinkType.COKE)
             {
                 Console.WriteLine("buy coke");
-                Console.WriteLine($"charge is {charge.Sum(coin => coin.Amount)} yen");
+                Console.WriteLine($"charge is {charge.Amount} yen");
             }
             else
             {

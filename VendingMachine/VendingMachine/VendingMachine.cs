@@ -12,8 +12,8 @@ namespace VendingMachine
         private Stock stockOfCoke = new Stock(5);        // コーラの在庫数
         private Stock stockOfDietCoke = new Stock(5);    // ダイエットコーラの在庫数
         private Stock stockOfTea = new Stock(5);         // お茶の在庫数
-        private Stack<ICoin> stockOf100Yen = new Stack<ICoin>(Enumerable.Range(0, 10).Select(i => new OneHundredYen()).ToArray());     // 100円玉の在庫
-        private List<ICoin> change = new List<ICoin>();             // お釣り
+        private StockOf100Yen stockOf100Yen = new StockOf100Yen(new List<ICoin>(Enumerable.Range(0, 10).Select(i => new OneHundredYen()).ToList()));     // 100円玉の在庫
+        private Change change = new Change();             // お釣り
 
         public Drink Buy(ICoin payment, DrinkType kind)
         {
@@ -54,7 +54,7 @@ namespace VendingMachine
             else if (payment.Type == CoinType._500YEN)
             {
                 // 400円のお釣り
-                change.AddRange(calculateChange());
+                change.Add(CalculateChange());
             }
 
             if (kind == DrinkType.COKE)
@@ -73,14 +73,14 @@ namespace VendingMachine
             return new Drink(kind);
         }
 
-        private List<ICoin> calculateChange()
+        private Change CalculateChange()
         {
-            return Enumerable.Range(0, 4).Select(i => stockOf100Yen.Pop()).ToList();
+            return new Change(Enumerable.Range(0, 4).Select(i => stockOf100Yen.Pop()).ToList());
         }
 
-        public List<ICoin> Refund()
+        public Change Refund()
         {
-            var result = new List<ICoin>(change);
+            var result = change.ShallowCopy();
             change.Clear();
             return result;
         }
