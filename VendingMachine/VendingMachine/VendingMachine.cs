@@ -23,24 +23,24 @@ namespace VendingMachine
                 return null;
             }
 
-            if ((kind == DrinkType.COKE) && (stockOfCoke.Quantity == 0))
+            if ((kind == DrinkType.COKE) && (stockOfCoke.isEmpty))
             {
                 change.Add(payment);
                 return null;
             }
-            else if ((kind == DrinkType.DIET_COKE) && (stockOfDietCoke.Quantity == 0))
+            else if ((kind == DrinkType.DIET_COKE) && (stockOfDietCoke.isEmpty))
             {
                 change.Add(payment);
                 return null;
             }
-            else if ((kind == DrinkType.TEA) && (stockOfTea.Quantity == 0))
+            else if ((kind == DrinkType.TEA) && (stockOfTea.isEmpty))
             {
                 change.Add(payment);
                 return null;
             }
 
             // 釣り銭不足
-            if (payment.Type == CoinType._500YEN && stockOf100Yen.Count < 4)
+            if (payment.Type == CoinType._500YEN && stockOf100Yen.DoesNotHaveChange)
             {
                 change.Add(payment);
                 return null;
@@ -54,7 +54,7 @@ namespace VendingMachine
             else if (payment.Type == CoinType._500YEN)
             {
                 // 400円のお釣り
-                change.Add(CalculateChange());
+                change.Add(stockOf100Yen.takeOutChange());
             }
 
             if (kind == DrinkType.COKE)
@@ -71,11 +71,6 @@ namespace VendingMachine
             }
 
             return new Drink(kind);
-        }
-
-        private Change CalculateChange()
-        {
-            return new Change(Enumerable.Range(0, 4).Select(i => stockOf100Yen.Pop()).ToList());
         }
 
         public Change Refund()

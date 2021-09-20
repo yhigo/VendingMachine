@@ -24,7 +24,7 @@ namespace VendingMachine
 
         public void Add(Change change) => _coins.AddRange(change._coins);
 
-        public int Amount => _coins.Sum(coin => coin.Amount);
+        public Money Money => _coins.Select(coin => coin.Money).Aggregate((sum, next) => sum.Add(next));
 
         public void Clear() => _coins.Clear();
 

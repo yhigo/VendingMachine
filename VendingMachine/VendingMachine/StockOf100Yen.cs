@@ -16,8 +16,15 @@ namespace VendingMachine
         }
         public int Count => _stock.Count;
 
+        public bool DoesNotHaveChange => _stock.Count < 4;
+
         public void Push(ICoin coin) => _stock.Push(coin);
 
         public ICoin Pop() => _stock.Pop();
+
+        public Change takeOutChange()
+        {
+            return new Change(Enumerable.Range(0, 4).Select(i => _stock.Pop()).ToList());
+        }
     }
 }

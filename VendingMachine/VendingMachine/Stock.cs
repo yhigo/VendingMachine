@@ -8,16 +8,18 @@ namespace VendingMachine
 {
     public class Stock
     {
-        public int Quantity { get; private set; }
+        private int _quantity;
 
         public Stock(int quantity)
         {
-            Quantity = quantity;
+            _quantity = quantity;
         }
+
+        public bool isEmpty => _quantity == 0;
 
         public void Decrement()
         {
-            Quantity--;
+            _quantity--;
         }
     }
 }

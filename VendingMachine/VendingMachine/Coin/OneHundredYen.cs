@@ -8,7 +8,8 @@ namespace VendingMachine
 {
     public class OneHundredYen : ICoin
     {
-        public int Amount => 100;
+        public Money Money => new Money(100);
+
         public CoinType Type => CoinType._100YEN;
     }
 }

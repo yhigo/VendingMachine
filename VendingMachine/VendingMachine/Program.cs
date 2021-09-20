@@ -12,10 +12,10 @@ namespace VendingMachine
             var drink = vendincMachine.Buy(new FiveHundredYen(), DrinkType.COKE);
             var charge = vendincMachine.Refund();
 
-            if (drink != null && drink.Kind == DrinkType.COKE)
+            if (drink != null && drink.IsCoke)
             {
                 Console.WriteLine("buy coke");
-                Console.WriteLine($"charge is {charge.Amount} yen");
+                Console.WriteLine($"charge is {charge.Money} yen");
             }
             else
             {

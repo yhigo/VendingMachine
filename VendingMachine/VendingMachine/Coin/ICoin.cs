@@ -8,7 +8,7 @@ namespace VendingMachine
 {
     public interface ICoin
     {
-        public int Amount { get; }
+        public Money Money { get; }
         public CoinType Type { get; }
     }
 }

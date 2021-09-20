@@ -8,21 +8,15 @@ namespace VendingMachine
 {
     public class Drink
     {
-        public static readonly int COKE = 0;
-        public static readonly int DIET_COKE = 1;
-        public static readonly int TEA = 2;
-
         private DrinkType _kind;
-
-        public DrinkType Kind
-        {
-            get { return _kind; }
-        }
-
 
         public Drink(DrinkType kind)
         {
             this._kind = kind;
         }
+
+        public bool IsCoke => _kind == DrinkType.COKE;
+        public bool IsDietCoke => _kind == DrinkType.DIET_COKE;
+        public bool IsTea => _kind == DrinkType.TEA;
     }
 }
