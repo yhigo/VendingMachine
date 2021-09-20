@@ -10,15 +10,14 @@ namespace VendingMachine
     {
         private CashBox _cashBox = new CashBox(new List<ICoin>(Enumerable.Range(0, 10).Select(i => new OneHundredYen()).ToList()));     // 100円玉の在庫
 
-        private Change _change = new Change();
+        private Payment _payment;
 
-        public void AddChange(ICoin payment) => _change.Add(payment);
+        public void Put(ICoin coin)
+        {
+            _payment = new Payment(coin);
+        }
 
-        public void AddChange(Change change) => _change.Add(change);
-
-        public void AddCoinIntoCashBox(ICoin payment) => _cashBox.Add(payment);
-
-        public bool DoesNotHaveChange => _cashBox.DoesNotHaveChange;
+        public bool DoesNotHaveChange => _payment.NeedChange && _cashBox.DoesNotHaveChange;
 
         public Change TakeOutChange()
         {
@@ -27,9 +26,12 @@ namespace VendingMachine
 
         public Change Refund()
         {
-            var result = _change.ShallowCopy();
-            _change.Clear();
-            return result;
+            return _payment.Refund();
+        }
+
+        public void Commit()
+        {
+            _payment.Commit(_cashBox);
         }
     }
 }

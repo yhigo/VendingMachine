@@ -14,39 +14,24 @@ namespace VendingMachine
 
         public Drink Buy(ICoin payment, DrinkType kind)
         {
-            if ((payment.Type != CoinType._100YEN) && (payment.Type != CoinType._500YEN))
-            {
-                _coinMech.AddChange(payment);
-                return null;
-            }
 
-            if (_storage.isEmpty(kind))
-            {
-                _coinMech.AddChange(payment);
-                return null;
-            }
+            _coinMech.Put(payment);
 
             // 釣り銭不足
-            if (payment.Type == CoinType._500YEN && _coinMech.DoesNotHaveChange)
+            if (_coinMech.DoesNotHaveChange)
             {
-                _coinMech.AddChange(payment);
                 return null;
             }
 
-            if (payment.Type == CoinType._100YEN)
+            // 在庫切れ
+            if (_storage.isEmpty(kind))
             {
-                // 100円玉を釣り銭に使える
-                _coinMech.AddCoinIntoCashBox(payment);
-            }
-            else if (payment.Type == CoinType._500YEN)
-            {
-                // 400円のお釣り
-                _coinMech.AddChange(_coinMech.TakeOutChange());
+                return null;
             }
 
-            _storage.Decrement(kind);
+            _coinMech.Commit();
 
-            return new Drink(kind);
+            return _storage.TakeOut(kind);
         }
 
         public Change Refund()

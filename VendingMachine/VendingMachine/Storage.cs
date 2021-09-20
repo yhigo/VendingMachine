@@ -17,9 +17,15 @@ namespace VendingMachine
 
         public bool isEmpty(DrinkType type) => _stocks[type].isEmpty;
 
-        public void Decrement(DrinkType type)
+        private void Decrement(DrinkType type)
         {
             _stocks[type].Decrement();
+        }
+
+        public Drink TakeOut(DrinkType kind)
+        {
+            Decrement(kind);
+            return new Drink(kind);
         }
     }
 }

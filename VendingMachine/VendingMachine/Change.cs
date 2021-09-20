@@ -15,6 +15,15 @@ namespace VendingMachine
 
         }
 
+        public Change(ICoin coin)
+        {
+            var coins = new List<ICoin>
+            {
+                coin
+            };
+            _coins = coins;
+        }
+
         public Change(List<ICoin> coins)
         {
             _coins = new List<ICoin>(coins);
